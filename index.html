@@ -1,116 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-      text-align: center;
-    }
-
-    .container {
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      margin-bottom: 25px;
-    }
-
-    button {
-      background: #00c6ff;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      border: none;
-      color: #fff;
-      padding: 15px 30px;
-      font-size: 1.1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.4);
-    }
-
-    .counter {
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
-    .random-word {
-      margin-top: 10px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #00eaff;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon - Shared Counter</title>
+<style>
+  body{height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); color:#fff; text-align:center; font-family:Arial;}
+  .container{padding:40px; max-width:400px; width:90%; background:rgba(0,0,0,0.4); border-radius:10px;}
+  h1{font-size:2.5rem; margin-bottom:20px;}
+  button{background:#00c6ff; border:none; color:#fff; padding:12px 20px; font-size:1rem; border-radius:50px; cursor:pointer; margin-top:10px;}
+  button:hover{transform:scale(1.05);}
+  .counter{margin-top:20px; font-size:1.2rem;}
+  .random-word{margin-top:10px; font-size:1.2rem; font-weight:bold; color:#00eaff;}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Coming Soon</h1>
-    <p>Something amazing is on the way 🚀</p>
+<div class="container">
+<h1>Coming Soon</h1>
+<p>Something amazing is on the way 🚀</p>
+<button onclick="handleClick()">🔥 Join the Launch Group</button>
+<div class="counter">Total clicks: <span id="clickCount">0</span></div>
+<div class="random-word" id="randomWord"></div>
+</div>
 
-    <button onclick="handleClick()">🔥 Join the Launch Group</button>
+<script>
+const words = ["Launching Soon 🚀","Stay Tuned 👀","Big Things Coming 💥","Almost Ready ⏳","Next Level 🔥","Be the First ⭐","New Experience ⚡","Game Changer 💎"];
 
-    <div class="counter">
-      Total clicks: <span id="clickCount">0</span>
-    </div>
+// ضع هنا رابط JSONBin أو أي API عام يحوي {"count":0}
+const API_URL = "https://api.jsonbin.io/v3/b/YOUR_BIN_ID/latest";
+const API_KEY = "YOUR_API_KEY";
 
-    <div class="random-word" id="randomWord"></div>
-  </div>
+async function fetchCount(){
+  const res = await fetch(API_URL, {
+    headers: { "X-Master-Key": API_KEY }
+  });
+  const data = await res.json();
+  const count = data.record.count || 0;
+  document.getElementById("clickCount").textContent = count;
+  return count;
+}
 
-  <script>
-    // جلب العدد المحفوظ أو تعيينه 0 أول مرة
-    let count = localStorage.getItem("clickCount")
-      ? parseInt(localStorage.getItem("clickCount"))
-      : 0;
+async function updateCount(newCount){
+  await fetch(API_URL, {
+    method:"PUT",
+    headers:{
+      "Content-Type":"application/json",
+      "X-Master-Key": API_KEY
+    },
+    body: JSON.stringify({count:newCount})
+  });
+}
 
-    document.getElementById("clickCount").textContent = count;
+// عند تحميل الصفحة
+let count = 0;
+fetchCount().then(c=>count=c);
 
-    const words = [
-      "Launching Soon 🚀",
-      "Stay Tuned 👀",
-      "Big Things Coming 💥",
-      "Almost Ready ⏳",
-      "Next Level 🔥",
-      "Be the First ⭐",
-      "New Experience ⚡",
-      "Game Changer 💎"
-    ];
-
-    function handleClick() {
-      count++;
-      localStorage.setItem("clickCount", count);
-      document.getElementById("clickCount").textContent = count;
-
-      const random =
-        words[Math.floor(Math.random() * words.length)];
-      document.getElementById("randomWord").textContent = random;
-    }
-  </script>
+async function handleClick(){
+  count++;
+  document.getElementById("clickCount").textContent = count;
+  const random = words[Math.floor(Math.random()*words.length)];
+  document.getElementById("randomWord").textContent = random;
+  await updateCount(count);
+}
+</script>
 </body>
 </html>
