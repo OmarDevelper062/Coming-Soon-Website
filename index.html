@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coming Soon</title>
+
   <style>
     * {
       margin: 0;
@@ -11,6 +12,7 @@
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
     }
+
     body {
       height: 100vh;
       display: flex;
@@ -20,24 +22,92 @@
       color: #ffffff;
       text-align: center;
     }
+
     .container {
       padding: 40px;
     }
+
     h1 {
       font-size: 3rem;
       letter-spacing: 2px;
       margin-bottom: 15px;
     }
+
     p {
       font-size: 1.2rem;
       opacity: 0.9;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: #00c6ff;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+    }
+
+    .counter {
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    .random-word {
+      margin-top: 10px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #00eaff;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Coming Soon</h1>
     <p>Something amazing is on the way 🚀</p>
+
+    <button onclick="handleClick()">🔥 Join the Launch Group</button>
+
+    <div class="counter">
+      Total clicks: <span id="clickCount">0</span>
+    </div>
+
+    <div class="random-word" id="randomWord"></div>
   </div>
+
+  <script>
+    let count = 0;
+
+    const words = [
+      "Launching Soon 🚀",
+      "Stay Tuned 👀",
+      "Big Things Coming 💥",
+      "Almost Ready ⏳",
+      "Next Level 🔥",
+      "Be the First ⭐",
+      "New Experience ⚡",
+      "Game Changer 💎"
+    ];
+
+    function handleClick() {
+      count++;
+      document.getElementById("clickCount").textContent = count;
+
+      const random =
+        words[Math.floor(Math.random() * words.length)];
+      document.getElementById("randomWord").textContent = random;
+    }
+  </script>
 </body>
 </html>
+
