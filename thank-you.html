@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You – Texly</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Background animation */
+    .glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #00c6ff55, transparent 70%);
+      filter: blur(80px);
+      animation: float 6s ease-in-out infinite alternate;
+    }
+
+    .glow.one {
+      top: -100px;
+      left: -100px;
+    }
+
+    .glow.two {
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0px);
+      }
+      to {
+        transform: translateY(40px);
+      }
+    }
+
+    /* Card */
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 50px 40px;
+      border-radius: 22px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      max-width: 420px;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      animation: pop 0.6s ease forwards;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.8);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    p {
+      line-height: 1.7;
+      opacity: 0.95;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 25px rgba(0, 114, 255, 0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 114, 255, 0.55);
+    }
+
+    .heart {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Animated glow -->
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <!-- Card -->
+  <div class="card">
+    <h1>Thank You! 🎉</h1>
+    <p>
+      We sincerely appreciate your trust and interest in <strong>Texly</strong>.<br><br>
+      Your submission has been received successfully, and we’ll keep you updated with our launch and upcoming services.
+    </p>
+
+    <a href="index.html" class="btn">
+      ⬅ Back to Texly
+    </a>
+
+    <div class="heart">
+      Made with ❤️ by Texly
+    </div>
+  </div>
+
+</body>
+</html>
