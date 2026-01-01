@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Texly</title>
+  <title>Texly – Launching Soon</title>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("guIEXPU-p_rC5m2ol");
+    })();
+  </script>
+
   <style>
     * {
       margin: 0;
@@ -13,105 +22,121 @@
     }
 
     body {
-      height: 100vh;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
       text-align: center;
+      position: relative;
+    }
+
+    .corner-logo {
+      position: absolute;
+      top: 20px;
+      left: 25px;
+    }
+
+    .corner-logo img {
+      width: 90px;
     }
 
     .container {
+      max-width: 420px;
+      width: 100%;
       padding: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
     }
 
     h1 {
-      font-size: 3rem;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 1.2rem;
-      opacity: 0.9;
       margin-bottom: 25px;
+      opacity: 0.9;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input {
+      padding: 15px;
+      border-radius: 50px;
+      border: none;
+      text-align: center;
+      font-size: 1rem;
     }
 
     button {
-      background: #00c6ff;
       background: linear-gradient(to right, #00c6ff, #0072ff);
       border: none;
       color: #fff;
-      padding: 15px 30px;
-      font-size: 1.1rem;
+      padding: 15px;
+      font-size: 1.05rem;
       border-radius: 50px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.4);
-    }
-
-    .counter {
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
-    .random-word {
-      margin-top: 10px;
-      font-size: 1.3rem;
+    .success {
+      margin-top: 15px;
+      color: #00ffcc;
       font-weight: bold;
-      color: #00eaff;
+      display: none;
     }
   </style>
 </head>
+
 <body>
+
+  <div class="corner-logo">
+    <img src="images/texly-logo.png" alt="Texly Logo">
+  </div>
+
   <div class="container">
     <h1>Texly</h1>
-    <p>Something amazing is on the way 🚀</p>
+    <p>Be the first to know when we launch 🚀</p>
 
-    <button onclick="handleClick()">🔥 Join the Launch Group</button>
+    <form onsubmit="sendEmail(event)">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <button type="submit">🚀 Notify Me</button>
+    </form>
 
-    <div class="counter">
-      Total clicks: <span id="clickCount">0</span>
+    <div class="success" id="successMessage">
+      ✅ Thank you for trusting us! Check your email 💙
     </div>
-
-    <div class="random-word" id="randomWord"></div>
   </div>
 
   <script>
-    // جلب العدد المحفوظ أو تعيينه 0 أول مرة
-    let count = localStorage.getItem("clickCount")
-      ? parseInt(localStorage.getItem("clickCount"))
-      : 0;
+    function sendEmail(event) {
+      event.preventDefault();
 
-    document.getElementById("clickCount").textContent = count;
+      const email = document.getElementById("email").value;
 
-    const words = [
-      "Launching Soon 🚀",
-      "Stay Tuned 👀",
-      "Big Things Coming 💥",
-      "Almost Ready ⏳",
-      "Next Level 🔥",
-      "Be the First ⭐",
-      "New Experience ⚡",
-      "Game Changer 💎"
-    ];
-
-    function handleClick() {
-      count++;
-      localStorage.setItem("clickCount", count);
-      document.getElementById("clickCount").textContent = count;
-
-      const random =
-        words[Math.floor(Math.random() * words.length)];
-      document.getElementById("randomWord").textContent = random;
+      emailjs.send(
+        "service_ywtnjc5",
+        "template_0w3dyph",
+        { user_email: email }
+      ).then(
+        function () {
+          document.getElementById("successMessage").style.display = "block";
+          document.getElementById("email").value = "";
+        },
+        function (error) {
+          alert("Error sending email 😢");
+          console.log(error);
+        }
+      );
     }
   </script>
+
 </body>
 </html>
-
