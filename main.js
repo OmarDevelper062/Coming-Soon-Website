@@ -1,4 +1,3 @@
-/* CLICK COUNTER */
 let count = localStorage.getItem("texly_clicks")
   ? parseInt(localStorage.getItem("texly_clicks"))
   : 0;
@@ -12,11 +11,9 @@ function increaseCount() {
   if (counter) counter.textContent = count;
 }
 
-/* FORM SUBMIT */
-function submitForm(event) {
-  event.preventDefault();
-
+function submitForm(e) {
+  e.preventDefault();
   setTimeout(() => {
     window.location.href = "thank-you.html";
-  }, 600);
+  }, 500);
 }
