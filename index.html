@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function () {
-      emailjs.init("guIEXPU-p_rC5m2ol");
+      emailjs.init("guIEXPU-p_rC5m2ol"); // Public Key
     })();
   </script>
 
@@ -46,7 +46,7 @@
       max-width: 420px;
       width: 100%;
       padding: 40px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 20px;
       backdrop-filter: blur(10px);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
@@ -74,6 +74,7 @@
       border: none;
       text-align: center;
       font-size: 1rem;
+      outline: none;
     }
 
     button {
@@ -97,45 +98,51 @@
 
 <body>
 
+  <!-- Logo -->
   <div class="corner-logo">
     <img src="images/texly-logo.png" alt="Texly Logo">
   </div>
 
+  <!-- Content -->
   <div class="container">
     <h1>Texly</h1>
     <p>Be the first to know when we launch 🚀</p>
 
-    <form onsubmit="sendEmail(event)">
+    <form id="emailForm">
       <input type="email" id="email" placeholder="Enter your email" required />
       <button type="submit">🚀 Notify Me</button>
     </form>
 
     <div class="success" id="successMessage">
-      ✅ Thank you for trusting us! Check your email 💙
+      ✅ Thank you for registering! Please check your email 💙
     </div>
   </div>
 
   <script>
-    function sendEmail(event) {
-      event.preventDefault();
+    document
+      .getElementById("emailForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      const email = document.getElementById("email").value;
+        const email = document.getElementById("email").value;
 
-      emailjs.send(
-        "service_ywtnjc5",
-        "template_0w3dyph",
-        { user_email: email }
-      ).then(
-        function () {
-          document.getElementById("successMessage").style.display = "block";
-          document.getElementById("email").value = "";
-        },
-        function (error) {
-          alert("Error sending email 😢");
-          console.log(error);
-        }
-      );
-    }
+        emailjs
+          .send(
+            "service_ywtnjc5",     // Service ID
+            "template_0w3dyph",    // Template ID
+            { user_email: email } // MUST match template variable
+          )
+          .then(
+            function () {
+              document.getElementById("successMessage").style.display = "block";
+              document.getElementById("email").value = "";
+            },
+            function (error) {
+              console.error("EmailJS Error:", error);
+              alert(error.text || "Error sending email");
+            }
+          );
+      });
   </script>
 
 </body>
